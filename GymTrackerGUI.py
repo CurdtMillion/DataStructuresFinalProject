@@ -6,7 +6,7 @@ class GymTrackerGUI:
     def __init__(self, root):
         self.root = root
         self.root.title("Gym Equipment Repair Tracker")
-        self.root.geometry("600x400")
+        self.root.geometry("600x650")
 
         title_label = tk.Label(
             self.root,
@@ -16,6 +16,8 @@ class GymTrackerGUI:
         title_label.pack(pady=20)
         self.create_equipment_form()
         self.create_lookup_form()
+        self.create_repair_form()
+        
 
     def create_equipment_form(self):
         """Creates fields for entering gym equipment."""
@@ -67,6 +69,36 @@ class GymTrackerGUI:
         )
         self.lookup_result_label.grid(
             row=1, column=0, columnspan=2, sticky="w", pady=5
+        )
+
+    def create_repair_form(self):
+        """Creates fields for entering a repair request."""
+        repair_frame = tk.LabelFrame(
+            self.root,
+            text="Request Repair",
+            padx=10,
+            pady=10
+        )
+        repair_frame.pack(padx=20, pady=10, fill="x")
+
+        tk.Label(repair_frame, text="Equipment ID:").grid(
+            row=0, column=0, sticky="w", pady=5
+        )
+        self.repair_id_entry = tk.Entry(repair_frame)
+        self.repair_id_entry.grid(row=0, column=1, pady=5)
+
+        tk.Label(repair_frame, text="Problem:").grid(
+            row=1, column=0, sticky="nw", pady=5
+        )
+
+        # A Text widget allows a description with multiple lines.
+        self.repair_description_text = tk.Text(
+            repair_frame,
+            width=35,
+            height=4
+        )
+        self.repair_description_text.grid(
+            row=1, column=1, pady=5
         )
 
 if __name__ == "__main__":
