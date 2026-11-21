@@ -105,7 +105,7 @@ class GymTrackerGUI:
             equipment_frame,
             text="Add Equipment",
             width=18,
-            command=self.preview_action
+            command=self.validate_equipment
         )
         add_button.grid(
             row=3, column=0, columnspan=2, pady=(10, 5)
@@ -147,7 +147,7 @@ class GymTrackerGUI:
             lookup_frame,
             text="Find Equipment",
             width=18,
-            command=self.preview_action
+            command=self.validate_lookup
         )
         lookup_button.grid(
             row=2, column=0, columnspan=2, pady=(10, 5)
@@ -195,17 +195,119 @@ class GymTrackerGUI:
             repair_frame,
             text="Request Repair",
             width=18,
-            command=self.preview_action
+            command=self.validate_repair
         )
         repair_button.grid(
             row=2, column=0, columnspan=2, pady=(10, 5)
         )
 
-    def preview_action(self):
-        """Make sure button works."""
+    def validate_equipment(self):
+        """Check equipment fields prior to adding."""
+        equipment_id = self.equipment_id_entry.get().strip()
+        name = self.equipment_name_entry.get().strip()
+        location = self.equipment_location_entry.get().strip()
+
+        if equipment_id == "" or name == "" or location == "":
+            messagebox.showerror(
+                "Missing Information",
+                "Please enter an equipment ID, name, and location."
+            )
+            return
+
+        
+        try:
+            equipment_id = int(equipment_id)
+        except ValueError:
+            messagebox.showerror(
+                "Invalid Equipment ID",
+                "Equipment ID must be a positive whole number."
+            )
+            return
+
+        if equipment_id <= 0:
+            messagebox.showerror(
+                "Invalid Equipment ID",
+                "Equipment ID must be greater than zero."
+            )
+            return
+
         messagebox.showinfo(
-            "Button has been clicked, bro!"
+            "Input Valid",
+            "Equipment information correct, add function next sprint!"
         )
+
+    def validate_lookup(self):
+        """Make sure equipment ID is correct."""
+        equipment_id = self.lookup_id_entry.get().strip()
+
+        if equipment_id == "":
+            messagebox.showerror(
+                "Missing Information",
+                "Please enter an equipment ID."
+            )
+            return
+
+        try:
+            equipment_id = int(equipment_id)
+        except ValueError:
+            messagebox.showerror(
+                "Invalid Equipment ID",
+                "Equipment ID must be a positive whole number."
+            )
+            return
+
+        if equipment_id <= 0:
+            messagebox.showerror(
+                "Invalid Equipment ID",
+                "Equipment ID must be greater than zero."
+            )
+            return
+
+        self.lookup_result_label.config(
+            text="Valid equipment ID. Full funtionality in sprint 3."
+        )
+
+    def validate_repair(self):
+        """Make sure equipment ID and description correct."""
+        equipment_id = self.repair_id_entry.get().strip()
+
+        description = self.repair_description_text.get(
+            "1.0", "end-1c"
+        ).strip()
+
+        if equipment_id == "" or description == "":
+            messagebox.showerror(
+                "Missing Information",
+                "Please enter an equipment ID and describe the problem."
+            )
+            return
+
+        try:
+            equipment_id = int(equipment_id)
+        except ValueError:
+            messagebox.showerror(
+                "Invalid Equipment ID",
+                "Equipment ID must be a positive whole number."
+            )
+            return
+
+        if equipment_id <= 0:
+            messagebox.showerror(
+                "Invalid Equipment ID",
+                "Equipment ID must be greater than zero."
+            )
+            return
+
+        messagebox.showinfo(
+            "Input Valid",
+            "Repair information is valid. Functionality in sprint 3."
+        )
+
+    #def preview_action(self):
+     #   """Make sure button works."""
+      #  messagebox.showinfo(
+       #     "Button has been clicked, bro!"
+        #)
 
 if __name__ == "__main__":
     root = tk.Tk()
